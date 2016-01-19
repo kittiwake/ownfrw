@@ -4,7 +4,6 @@
 define ('DS', DIRECTORY_SEPARATOR); // разделитель для путей к файлам
 $sitePath = realpath(dirname(__FILE__) . DS) . DS;
 define ('SITE_PATH', $sitePath); // путь к корневой папке сайта
-
 $siteDir =  basename(dirname(__FILE__));
 define ('SITE_DIR', $siteDir);
 
@@ -12,12 +11,12 @@ define ('SITE_DIR', $siteDir);
 define('HOST', 'localhost'); 		//сервер
 define('USER', 'root'); 			//пользователь
 define('PASSWORD', ''); 			//пароль
-define('NAME_BD', 'demogm');		//база
+define('NAME_BD', 'ownfrw');		//база
 
 
 function __autoload($class_name){
 
-    $array_paths = array('models', 'classes');
+    $array_paths = array('models', 'controllers');
 
     foreach ($array_paths as $path){
 

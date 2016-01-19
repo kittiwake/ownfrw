@@ -7,18 +7,14 @@ error_reporting(E_ALL);
 include ('config.php');
 
 // Соединяемся с БД
-$dbObject = Db::getConection();
-
-// проверка подключения
+$dbObject = DbController::getConection();
 if(!$dbObject) exit('Не удалось подключиться к базе данных');
 
 //начать сессию
 $sessObject = new SessionController($dbObject);
 $sessError = $sessObject->start();
-if(!empty($sessError)) exit($sessError);
+//if(!empty($sessError)) exit($sessError);
 
 // Загружаем router
-$router = new Router();
-
-// запускаем маршрутизатор
+$router = new RouterController($dbObject);
 $router->run();

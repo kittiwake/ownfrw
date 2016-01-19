@@ -6,7 +6,7 @@
  * Time: 10:42
  */
 
-class Db {
+class DbController {
 
     public static function getConection(){
 

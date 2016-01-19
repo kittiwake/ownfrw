@@ -12,9 +12,7 @@ class SessionController {
     private $dbObject;
 
     public function __construct($dbObj) {
-
         $this->dbObject = $dbObj;
-
     }
 
     public function start(){
@@ -29,11 +27,11 @@ class SessionController {
                 $modelUsers = new Users($this->dbObject);
                 $user = $modelUsers->getUserByLogin($log);
 
-                if(!($user)){
-                    $this->error = 'Неверный логин';
+                if(!($user)||$user['user_password']!= md5(md5($pass).$user['user_hash'])){
+                    $this->error = 'Неверный логин или пароль';
                     //остаемся на странице авторизации
-                }elseif($user['user_password']!= md5(md5($pass).$user['user_hash'])){
-                    $this->error = 'Неверный пароль';
+                }elseif($user['validation']== 0){
+                    $this->error = 'Вам отказано в доступе';
                     //остаемся на странице авторизации
                 }else{
                     session_start();

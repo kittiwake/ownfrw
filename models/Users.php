@@ -6,14 +6,7 @@
  * Time: 10:54
  */
 
-class Users {
-
-    private $dbObject;
-
-    public function __construct($dbObj){
-
-        $this->dbObject = $dbObj;
-    }
+class Users extends BaseModel {
 
     public function getUserByLogin($val){
 
@@ -23,7 +16,5 @@ class Users {
         $res->setFetchMode(PDO::FETCH_ASSOC);
 
         return $res->fetch();
-
     }
-
 }
