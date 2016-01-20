@@ -28,10 +28,10 @@ class SessionController {
                 $user = $modelUsers->getUserByLogin($log);
 
                 if(!($user)||$user['user_password']!= md5(md5($pass).$user['user_hash'])){
-                    $this->error = 'Неверный логин или пароль';
+                    $this->error = 'Invalid login or password';
                     //остаемся на странице авторизации
                 }elseif($user['validation']== 0){
-                    $this->error = 'Вам отказано в доступе';
+                    $this->error = 'You are denied access';
                     //остаемся на странице авторизации
                 }else{
                     session_start();
@@ -48,7 +48,7 @@ class SessionController {
             session_destroy();
 
         }else{
-            $this->error = 'Авторизируйтесь';
+            $this->error = 'You need to log in';
         }
 
         return $this->error;

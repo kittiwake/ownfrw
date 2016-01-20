@@ -14,21 +14,25 @@ class RouterController {
 
     public function run(){
         //парсим адрес
-        $route = $_GET['route'];
+        if(isset($_GET['route'])) {
+            $get_route = $_GET['route'];
+            $route = '/'.(substr($get_route, -1)=='/' ? substr($get_route, 0, -1) : $get_route);
+        }
+        else $route = null;
         $segments = explode('/', $route);
 
         //каждый элемент проверить в базе
         foreach($segments as $key=>$val){
             $pageModel = new Pages($this->dbObject);
-            $result = $pageModel->checkAddress($val,$key+1);//?route=order/new -> ?????????????
+            $result = $pageModel->checkAddress($val,$key);
             //если найдена не существ страница, вернуть ошибку $this->error
-            if(!$result) $this->error = 'Такого адреса не существует';
-            elseif($result['status']=='passive') $this->error = 'Данная страница недоступна';
+            if(!$result) $this->error = 'Page not found';
+            elseif($result['status']=='passive') $this->error = 'Page is not available';
             else $pageId = $result['id'];
         }
         //возвращаем индекс последнего элемента(если каждый элемент существует)
         if($this->error == null) return $pageId;
 
-        //??? что вернуть по умолчанию? $this->error?
+        return $this->error;
     }
 }
