@@ -27,22 +27,24 @@ class SessionController {
                 $modelUsers = new Users($this->dbObject);
                 $user = $modelUsers->getUserByLogin($log);
 
-                if(!($user)||$user['user_password']!= md5(md5($pass).$user['user_hash'])){
+                if(!($user)||$user['password']!= md5(md5($pass).$user['salt'])){
                     $this->error = 'Invalid login or password';
                     //остаемся на странице авторизации
-                }elseif($user['validation']== 0){
+                }elseif($user['status']== 'disabled'){
                     $this->error = 'You are denied access';
                     //остаемся на странице авторизации
                 }else{
                     session_start();
-                    $_SESSION['ri'] = $user['user_right'];
-                    $_SESSION['user'] = $user['user_login'];
+                    $this->error = 'session started';
+                    $_SESSION['group'] = $user['group'];
+                    $_SESSION['user'] = $user['login'];
                     //переходим на рабочую страницу
                 }
             }
 
         }elseif(isset($_COOKIE['PHPSESSID'])){
             session_start();
+            $this->error = 'session ok';
 
         }elseif($_GET['out']=="1"){
             session_destroy();
