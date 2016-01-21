@@ -20,11 +20,11 @@ class RouterController {
         }
         else $route = null;
         $segments = explode('/', $route);
-
+        $pageId = 0;
         //каждый элемент проверить в базе
         foreach($segments as $key=>$val){
             $pageModel = new Pages($this->dbObject);
-            $result = $pageModel->checkAddress($val,$key);
+            $result = $pageModel->checkAddress($val,$key,$pageId);
             //если найдена не существ страница, вернуть ошибку $this->error
             if(!$result) $this->error = 'Page not found';
             elseif($result['status']=='passive') $this->error = 'Page is not available';
