@@ -23,8 +23,9 @@ class ContentController {
                 break;
             case 'session started' :
             case 'session ok' :
-                $this->buildLoggedInPage($routerError);
-                break;
+                $content = $this->buildLoggedInPage($routerError);
+                include(SITE_PATH.'/views/main.php');
+            break;
         }
     }
 
