@@ -27,8 +27,7 @@ class Pages extends BaseModel {
         return $res->fetch();
     }
 
-    public function getContent($pageId){
-        $gid = $_SESSION['gid'];
+    public function getContent($pageId, $gid){
         $res = $this->dbObject->prepare('
             SELECT `permission`, `content`
             FROM `router_contents`

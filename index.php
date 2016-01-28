@@ -18,5 +18,13 @@ $sessError = $sessObject->start();
 $router = new RouterController($dbObject);
 $routerError = $router->run();
 
-$content = new ContentController($dbObject);
-$content->display($sessError, $routerError);
+$contentObj = new ContentController($dbObject);
+$content = $contentObj->display($sessError, $routerError);
+
+include_once('lib/Smarty.class.php');
+$tpl = new Smarty();
+$tpl->assign('content', $content);
+$tpl->display('layout.tpl');
+
+
+

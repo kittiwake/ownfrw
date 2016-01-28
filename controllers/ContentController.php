@@ -13,25 +13,29 @@ class ContentController {
     }
 
     public function display($sessError, $routerError){
+
         switch ($sessError){
-            case 'Invalid login or password' :
             case 'You are denied access' :
-                ;
+                $content = 'Вам нельзя';
                 break;
             case 'You need to log in' :
-                ;
+            case 'Invalid login or password' :
+            default:
+                $contentf = 'auth.tpl';
                 break;
             case 'session started' :
             case 'session ok' :
                 $content = $this->buildLoggedInPage($routerError);
-                include(SITE_PATH.'/views/main.php');
-            break;
+                break;
         }
+        return $content;
     }
 
     private function buildLoggedInPage($pageId){
+     //   $gid = $_SESSION['gid'];
+        $gid = 'admin';
         $modelContent = new Pages($this->dbObject);
-        $cont = $modelContent->getContent($pageId);
+        $cont = $modelContent->getContent($pageId, $gid);
         if($cont['permission'] == 'open'){
             return $cont['content'];
         }

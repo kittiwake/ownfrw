@@ -36,7 +36,8 @@ class SessionController {
                 }else{
                     session_start();
                     $this->error = 'session started';
-                    $_SESSION['group'] = $user['group'];
+
+                    $_SESSION['gid'] = $user['gid'];
                     $_SESSION['user'] = $user['login'];
                     //переходим на рабочую страницу
                 }
