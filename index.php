@@ -5,6 +5,8 @@ error_reporting(E_ALL);
 
 // подключаем конфиг
 include ('config.php');
+//библиотеки
+include_once('lib/Smarty/Smarty.class.php');
 
 // Соединяемся с БД
 $dbObject = DbController::getConection();
@@ -20,11 +22,6 @@ $routerError = $router->run();
 
 $contentObj = new ContentController($dbObject);
 $content = $contentObj->display($sessError, $routerError);
-
-include_once('lib/Smarty.class.php');
-$tpl = new Smarty();
-$tpl->assign('content', $content);
-$tpl->display('layout.tpl');
 
 
 

@@ -8,15 +8,14 @@
 <body>
 <div id="shapka">
     <div id="menu">
-
+        {$menu}
     </div>
-    <div id="hello">
-
+    <div id="session">
+        {$session}
     </div>
 </div>
 <div class="content">
     {$content}
-    {include file= 'auth.tpl'}
 </div>
 </body>
 </html>

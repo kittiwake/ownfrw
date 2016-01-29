@@ -47,8 +47,9 @@ class SessionController {
             session_start();
             $this->error = 'session ok';
 
-        }elseif($_GET['out']=="1"){
+        }elseif(isset($_GET['out'])&&$_GET['out']=="1"){
             session_destroy();
+            setcookie('PHPSESSID','',1);
 
         }else{
             $this->error = 'You need to log in';

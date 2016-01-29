@@ -14,7 +14,7 @@ define('PASSWORD', ''); 			//пароль
 define('NAME_BD', 'ownfrw');		//база
 
 
-function __autoload($class_name){
+function __autoload_ownfrw($class_name){
 
     $array_paths = array('models', 'controllers');
 
@@ -26,5 +26,7 @@ function __autoload($class_name){
         }
     }
 }
+
+spl_autoload_register('__autoload_ownfrw');
 
 ?>
