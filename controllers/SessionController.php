@@ -43,14 +43,15 @@ class SessionController {
                 }
             }
 
-        }elseif(isset($_COOKIE['PHPSESSID'])){
+        }elseif(session_id()){
             session_start();
             $this->error = 'session ok';
 
-        }elseif(isset($_GET['out'])&&$_GET['out']=="1"){
+        }elseif(isset($_POST['out'])&&$_POST['out']=="exit"){
+            session_start();
+            session_unset();
+            setcookie(session_name(), session_id(), 1);
             session_destroy();
-            setcookie('PHPSESSID','',1);
-
         }else{
             $this->error = 'You need to log in';
         }

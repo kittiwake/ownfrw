@@ -27,12 +27,8 @@ class ContentController {
             case 'session ok' :
                 $content = $this->buildLoggedInPage($routerError);
                 break;
-            case 'You need to log in' :
-                $content = 'и снова здесь!';
-                break;
             case 'Invalid login or password' :
-            $content = 'неверно';
-                break;
+            case 'You need to log in' :
             default:
                 //созд объект смарти
                 $smarty_auth = new Smarty();
@@ -64,8 +60,11 @@ class ContentController {
 
     private function getSessionContent(){
         if(isset($_SESSION['user']))
-            return "логин: ".$_SESSION['user'].' | выйти';
+            return "логин: ".$_SESSION['user'].' | <form action="" method="post">
+    <input type="submit" name="out" value="exit">
+</form> ';
         else
             return 'нужна авторизация';
     }
 }
+?>
