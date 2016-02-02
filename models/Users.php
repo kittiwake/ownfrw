@@ -41,4 +41,16 @@ VALUES (:login, :password, :salt, :group, CURDATE())
         }
         return $code;
     }
+
+    public function getAllUserGroups(){
+        $res = $this->dbObject->prepare('SELECT * FROM `user_groups`');
+        $res->execute();
+        $res->setFetchMode(PDO::FETCH_ASSOC);
+
+        $groupList = array();
+        while ($row = $res->fetch()) {
+            $groupList[] = $row;
+        }
+        return $groupList;
+    }
 }

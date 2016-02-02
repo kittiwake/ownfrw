@@ -13,13 +13,20 @@ class RouterController {
     }
 
     public function run(){
-        //парсим адрес
-        if(isset($_GET['route'])) {
+        //парсим адрес 'REQUEST_URI' => string '/ownfrw/cms/' (length=12)
+        //Полный адрес к скрипту   echo "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+/*     if(isset($_GET['route'])) {
             $get_route = $_GET['route'];
             $route = '/'.(substr($get_route, -1)=='/' ? substr($get_route, 0, -1) : $get_route);
         }
-        else $route = null;
+        else $route = null;*/
+
+        $route = $_SERVER['REQUEST_URI'];
+        $route = (substr($route, -1)=='/' ? substr($route, 0, -1) : $route);//убираем завершающий слэш
         $segments = explode('/', $route);
+        array_shift($segments);
+        $segments[0] = '';
+        var_dump($segments);
         $pageId = 0;
         //каждый элемент проверить в базе
         foreach($segments as $key=>$val){
@@ -34,5 +41,43 @@ class RouterController {
         if($this->error == null) return $pageId;
 
         return $this->error;
+    }
+
+    public function addPage($parentPageId, $address, $status='active'){
+
+        //читаем инффу по родительской стр из бд
+        $pageModel = new Pages($this->dbObject);
+        $parPage = $pageModel->getPageById($parentPageId);
+        if($parPage['status']=='active'){
+            //есть ли у этой родительской стр дочерние с таким же именем
+            $children = $pageModel->getChildren($parentPageId);
+            foreach ($children as $child){
+                if($child['address'] == $address){
+                    //такая страница уже существует
+                }else{
+                    $level = $parPage['level']+1;
+                    //создать стр, внести запись в таблицу бд
+                    $newId = $pageModel->setNewPage($address, $parentPageId, $level, $status);
+                    //прочитать все группы пользователей в массив
+                    $usersModel = new Users($this->dbObject);
+                    $groups = $usersModel->getAllUserGroups();
+                    //перебрать массив, созлать записи в router_contents
+                    foreach($groups as $group){
+                        $content = '';//&&&&&&&&&&&&&%%%%%%%%%%%%%%%%%###############
+                        $pageModel->setContent($newId, $group['gid'], $content);
+                    }
+                }
+            }
+        }else{
+
+        }
+
+    }
+    public function dellPage($pageId){
+        //удалить из таблиц router_contents router_pages
+        $pageModel = new Pages($this->dbObject);
+        $pageModel->delContent($pageId);
+        $pageModel->delPage($pageId);
+
     }
 }
