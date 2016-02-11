@@ -13,20 +13,12 @@ class RouterController {
     }
 
     public function run(){
-        //парсим адрес 'REQUEST_URI' => string '/ownfrw/cms/' (length=12)
-        //Полный адрес к скрипту   echo "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-/*     if(isset($_GET['route'])) {
-            $get_route = $_GET['route'];
-            $route = '/'.(substr($get_route, -1)=='/' ? substr($get_route, 0, -1) : $get_route);
-        }
-        else $route = null;*/
 
         $route = $_SERVER['REQUEST_URI'];
         $route = (substr($route, -1)=='/' ? substr($route, 0, -1) : $route);//убираем завершающий слэш
         $segments = explode('/', $route);
         array_shift($segments);
         $segments[0] = '';
-        var_dump($segments);
         $pageId = 0;
         //каждый элемент проверить в базе
         foreach($segments as $key=>$val){
@@ -44,8 +36,7 @@ class RouterController {
     }
 
     public function addPage($parentPageId, $address, $status='active'){
-
-        //читаем инффу по родительской стр из бд
+        //читаем инфу по родительской стр из бд
         $pageModel = new Pages($this->dbObject);
         $parPage = $pageModel->getPageById($parentPageId);
         if($parPage['status']=='active'){
@@ -68,16 +59,12 @@ class RouterController {
                     }
                 }
             }
-        }else{
-
         }
-
     }
     public function dellPage($pageId){
         //удалить из таблиц router_contents router_pages
         $pageModel = new Pages($this->dbObject);
         $pageModel->delContent($pageId);
         $pageModel->delPage($pageId);
-
     }
 }

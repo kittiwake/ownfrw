@@ -22,5 +22,3 @@ $routerError = $router->run();
 
 $contentObj = new ContentController($dbObject);
 $content = $contentObj->display($sessError, $routerError);
-
-

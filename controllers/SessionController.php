@@ -42,22 +42,22 @@ class SessionController {
                     //переходим на рабочую страницу
                 }
             }
-        }elseif(isset($_POST['out'])&&$_POST['out']=="exit"){
+        }elseif(isset($_GET['out']) && $_GET['out']==1){
             session_start();
             session_unset();
             session_destroy();
             setcookie('PHPSESSID', '', -1);
-
-            echo 'jhgfd';
-
+            header('Location: /'.SITE_DIR);
         }elseif(!empty($_COOKIE['PHPSESSID']) && session_start()){
-    //        session_start();
-            $this->error = 'session ok';
+            if(sizeof($_SESSION)>0){
+                $this->error = 'session ok';
+            }else{
+                $this->error = 'You need to log in';
+            }
         }else{
             $this->error = 'You need to log in';
-
         }
-
         return $this->error;
     }
+
 }

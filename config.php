@@ -16,14 +16,19 @@ define('NAME_BD', 'ownfrw');		//база
 
 function __autoload_ownfrw($class_name){
 
-    $array_paths = array('models', 'controllers');
-
-    foreach ($array_paths as $path){
-
-        $path = SITE_PATH . $path .DS. $class_name . '.php';
-        if (is_file($path)){
-            include_once $path;
-        }
+    switch($class_name){
+        case 'Orders':
+            require_once (SITE_PATH .'models/orders/Orders.php');
+            break;
+        default:
+            $array_paths = array('models', 'controllers');
+            foreach ($array_paths as $path){
+                $path = SITE_PATH . $path .DS. $class_name . '.php';
+                if (is_file($path)){
+                    require_once $path;
+                }
+            }
+            break;
     }
 }
 

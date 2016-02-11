@@ -7,17 +7,18 @@
 class ContentController {
 
     private $dbObject;
+    private $smartyObj;
 
     public function __construct($dbObj) {
         $this->dbObject = $dbObj;
+        $this->smartyObj = new Smarty();
+        $this->smartyObj->template_dir = 'templates';
+        $this->smartyObj->compile_dir =  "lib/Smarty/templates_c/";
+        $this->smartyObj->config_dir =   "lib/Smarty/configs/";
+        $this->smartyObj->cache_dir =    "lib/Smarty/cache/";
     }
 
     public function display($sessError, $routerError){
-        $tpl = new Smarty();
-        $tpl->template_dir = 'templates';
-        $tpl->compile_dir =  "lib/Smarty/templates_c/";
-        $tpl->config_dir =   "lib/Smarty/configs/";
-        $tpl->cache_dir =    "lib/Smarty/cache/";
 
         switch ($sessError){
             case 'You are denied access' :
@@ -31,38 +32,43 @@ class ContentController {
             case 'You need to log in' :
             default:
                 //созд объект смарти
-                $smarty_auth = new Smarty();
-                $smarty_auth->template_dir = 'templates';
-                $smarty_auth->compile_dir =  "lib/Smarty/templates_c/";
-                $smarty_auth->config_dir =   "lib/Smarty/configs/";
-                $smarty_auth->cache_dir =    "lib/Smarty/cache/";
                 //в буфер auth.tpl и присв переменной $content
-                $content = $smarty_auth->fetch('auth.tpl');
+                $content = $this->smartyObj->fetch('auth.tpl');
                 break;
         }
-
-        $tpl->assign('content', $content);
-        $tpl->assign('menu', 'меню');
-        $tpl->assign('session', $this->getSessionContent());
-        $tpl->display('layout.tpl');
+        $this->smartyObj->assign('content', $content);
+        $this->smartyObj->assign('menu', 'меню');
+        $this->smartyObj->assign('session', $this->getSessionContent());
+        $this->smartyObj->display('layout.tpl');
 
     }
 
     private function buildLoggedInPage($pageId){
-     //   $gid = $_SESSION['gid'];
-        $gid = 'admin';
+        $gid = $_SESSION['gid'];
         $modelContent = new Pages($this->dbObject);
         $cont = $modelContent->getContent($pageId, $gid);
         if($cont['permission'] == 'open'){
-            return $cont['content'];
+            //условие если похоже на ____module(orders: addnew)
+            $content = $cont['content'];
+            if (preg_match('~^____module\(([a-z]+): ([a-z]+)\)$~', $content, $parts)){
+                $modelName = $parts[1];
+                $modelArg = $parts[2];
+                switch ($modelName){
+                    case 'orders':
+                        $model = new Orders($this->dbObject, $this->smartyObj);
+                        break;
+                }
+                return $model->getContent($modelArg);
+            }else{
+                return $content;
+            }
+
         }
     }
 
     private function getSessionContent(){
         if(isset($_SESSION['user']))
-            return "логин: ".$_SESSION['user'].' | <form action="" method="post">
-    <input type="submit" name="out" value="exit">
-</form> ';
+            return "логин: ".$_SESSION['user'].' | <a href="?out=1">Выход</a>';
         else
             return 'нужна авторизация';
     }
