@@ -20,6 +20,9 @@ function __autoload_ownfrw($class_name){
         case 'Orders':
             require_once (SITE_PATH .'models/orders/Orders.php');
             break;
+        case 'Order':
+            require_once (SITE_PATH .'models/orders/Order.php');
+            break;
         default:
             $array_paths = array('models', 'controllers');
             foreach ($array_paths as $path){

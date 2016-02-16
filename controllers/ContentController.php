@@ -55,7 +55,7 @@ class ContentController {
                 $modelArg = $parts[2];
                 switch ($modelName){
                     case 'orders':
-                        $model = new Orders($this->dbObject, $this->smartyObj);
+                        $model = new Orders($this->dbObject);
                         break;
                 }
                 return $model->getContent($modelArg);
