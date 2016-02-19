@@ -1,12 +1,12 @@
 <ul id="nav">
     <li>
-        <a href="#">Новый</a>
+        <a href="/ownfrw/new">Новый</a>
     </li>
     <li>
         <a href="#">План вывоза</a>
         <ul>
-            <li><a href="#">Заказы</a></li>
-            <li><a href="#">Рекламаций</a></li>
+            <li><a href="/ownfrw/schedule/orders">Заказы</a></li>
+            <li><a href="/ownfrw/schedule/claims">Рекламаций</a></li>
         </ul>
     </li>
     <li>

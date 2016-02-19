@@ -37,7 +37,7 @@ class ContentController {
                 break;
         }
         $this->smartyObj->assign('content', $content);
-        $this->smartyObj->assign('menu', 'меню');
+        $this->smartyObj->assign('menu', $this->getMenu());
         $this->smartyObj->assign('session', $this->getSessionContent());
         $this->smartyObj->display('layout.tpl');
 
@@ -71,6 +71,12 @@ class ContentController {
             return "логин: ".$_SESSION['user'].' | <a href="?out=1">Выход</a>';
         else
             return 'нужна авторизация';
+    }
+
+    private function getMenu(){
+
+        $menu = $this->smartyObj->fetch('menu.tpl');
+        return $menu;
     }
 }
 ?>
