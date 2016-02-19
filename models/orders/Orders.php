@@ -42,6 +42,21 @@ class Orders extends BaseView {
                 }
                 $content = $this->smObj->fetch('addnew.tpl');
                 break;
+            case 'out_orders':
+                $schedule = new Schedule($this->dbObject);
+                $list = $schedule->getPlan();
+                $this->smObj->assign('orderList', $list);
+                $content = $this->smObj->fetch('schedule.tpl');
+   //             var_dump($list);
+                break;
+            case 'out_claims':
+                $schedule = new Schedule($this->dbObject);
+                $schedule->claim = true;
+                $list = $schedule->getPlan();
+      //          var_dump($list);
+                $this->smObj->assign('orderList', $list);
+                $content = $this->smObj->fetch('schedule.tpl');
+                break;
 
         }
 

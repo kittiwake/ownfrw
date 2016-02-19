@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Моя собственность</title>
+    <link type="text/css" href="/{SITE_DIR}/front/css/style.css" rel="stylesheet" /></head>
 </head>
 
 <body>

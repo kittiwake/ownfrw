@@ -1,0 +1,99 @@
+* {
+    margin:0;
+    padding:0;
+}
+
+#shapka{
+    position:fixed;
+    top: 0px;
+    display:table;
+    width: 100%;
+}
+#hello{
+    width: 170px;
+    display: table-cell;
+    vertical-align: middle;
+}
+#menu{
+    display: table-cell;
+}
+#nav {
+    font:13px verdana, arial, helvetica, sans-serif;
+    list-style-type:none;
+    width:100%;
+    height:25px;
+    display:inline-block;
+    background:#9FD2D7;
+    line-height:25px;
+}
+#nav li{
+    float:left;
+    width:130px;
+    margin-top:-10000px;
+}
+#nav li a {
+    width:130px;
+    text-decoration:none;
+    text-align:center;
+    color:#3A3732;
+    position:relative;
+    float:left;
+    margin-right:-129px;
+    margin-top:10000px;
+}
+#nav li a:hover, #content #nav li a:focus, #content #nav li a:active {
+    background:#797466;
+    margin-right:0;
+    color:#fff;
+}
+#nav li ul {
+    background:#A39E92;
+    float:left;
+    margin-top:-25px;
+    padding-top:25px;
+    margin-bottom:-10000px;
+    list-style-type:none;
+}
+#nav li ul li {
+    float:none;
+    margin:0;
+    width:auto;
+}
+#nav li ul li a {
+    float:none;
+    display:block;
+    margin:0;
+    margin-right:-1px;
+    background:#BFBCB5;
+}
+
+.content{
+    background-color: rgba(248, 218, 110, 0.11);
+    margin-top: 30px;
+}
+/*план вывоза*/
+.rad{
+    border-radius: 8px;
+    /*   float: right;*/
+
+}
+.plan{
+    width:100%;
+}
+.plan td {
+    vertical-align:top;
+}
+.oneday{
+    width: 100%;
+}
+.oneday td {
+    vertical-align:middle;
+    text-align: center;
+    width: 46%;
+}
+.plandate {
+    text-align: left !important;
+}
+.summa {
+    text-align: right !important;/*устанавливает приоритет*/
+}

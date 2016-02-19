@@ -50,7 +50,7 @@ class ContentController {
         if($cont['permission'] == 'open'){
             //условие если похоже на ____module(orders: addnew)
             $content = $cont['content'];
-            if (preg_match('~^____module\(([a-z]+): ([a-z]+)\)$~', $content, $parts)){
+            if (preg_match('~^____module\(([a-z]+): ([a-z_]+)\)$~', $content, $parts)){
                 $modelName = $parts[1];
                 $modelArg = $parts[2];
                 switch ($modelName){

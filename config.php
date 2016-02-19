@@ -23,6 +23,9 @@ function __autoload_ownfrw($class_name){
         case 'Order':
             require_once (SITE_PATH .'models/orders/Order.php');
             break;
+        case 'Schedule':
+            require_once (SITE_PATH .'models/orders/Schedule.php');
+            break;
         case 'Pages':
             require_once (SITE_PATH .'models/pages/Pages.php');
             break;
